@@ -20,7 +20,7 @@ df = pd.read_excel (r'C:\Users\pardo\OneDrive\Desktop\AI Lab Play Data\Data\Lung
 Unique_identifiers = ['var_HaralickCorrelationWs_5', 'median_LawsW5E5', 'var_HaralickCorrelationWs_7', 'median_LawsS5W5', 'var_HaralickEnergyWs_5', 'median_RawIntensity', 'skewness_GaborXY___0_785___1_276_BW_1',
                         'var_HaralickEntropyWs_3', 'var_HaralickDiff_entWs_3', 'var_HaralickCorrelationWs_5', 'skewness_RawIntensity', 'kurtosis_HaralickInfo1Ws_7', 'median_GradientSobelx', 'median_HaralickInertiaWs_3',
                         'kurtosis_HaralickInfo2Ws_3', 'var_HaralickCorrelationWs_3', 'median_HaralickSum_avWs_3', 'median_GradientX', 'kurtosis_GrayStd_devWs_3', 'median_lawsL5S5', 'kurtosis_GaborXY___1_963___1_276_BW_1']
-
+asdf
  
 # Load Axes Options
 Axes = Unique_identifiers
