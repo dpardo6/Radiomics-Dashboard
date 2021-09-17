@@ -21,3 +21,5 @@ df = pd.read_exce(r'your desired directory here')
 ```
 
 ## Examples
+
+![image](https://user-images.githubusercontent.com/89718849/133726532-70e830ae-2880-4fe4-b311-ba3583a231ff.png)
