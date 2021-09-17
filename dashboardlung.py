@@ -14,7 +14,7 @@ import plotly.figure_factory as ff
 
 
 # Load Data
-df = pd.read_excel (r'C:\Users\pardo\OneDrive\Desktop\AI Lab Play Data\Data\LungDataBatch1_2.xlsx')
+df = pd.read_excel(r'C:\Users\pardo\OneDrive\Desktop\AI Lab Play Data\Data\LungDataBatch1_2.xlsx')
 
 # Load Chief Complaint List
 Unique_identifiers = ['var_HaralickCorrelationWs_5', 'median_LawsW5E5', 'var_HaralickCorrelationWs_7', 'median_LawsS5W5', 'var_HaralickEnergyWs_5', 'median_RawIntensity', 'skewness_GaborXY___0_785___1_276_BW_1',
@@ -36,19 +36,22 @@ Color = ['Mortality', 'TotalScore']
 
 # Create App
 app = dash.Dash(__name__)
+#app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+
 
 # App Layout
 app.layout = html.Div(children=[
+
     # Title of Page
     html.Div(children=[
         html.H3(children='Radiomic Features Dashboard'),
         # html.H4(children='Patient Overview', style={'marginTop': '-1.5rem'})
     ], style={'textAlign': 'center', 'marginTop': '5rem'}),
-    
-
+   
+   
     # First Row Items
     html.Div(children=[
-    
+
         # Data Filter Box #
         html.Div(children=[
             html.Label('Filter by Age:', style={'paddingTop': '4rem'}),
@@ -125,8 +128,8 @@ app.layout = html.Div(children=[
         html.Div(children=[
             html.Div(children=[
                 html.H5(children='Customize Visualization:'),
-            ], style={'textAlign': 'center'}),
-            
+            ], style={'textAlign': 'center'}
+            ),
             html.Label('Change Stat Box Value:'),
             dcc.Dropdown(
                 id="Stat_unique",
@@ -134,78 +137,126 @@ app.layout = html.Div(children=[
                 value= Stat_unique[1],
                 className="dcc_control",
                 clearable = False,
-            ),
-            # Button To Collapse Customization Options
-            dbc.Button("Graph 1", id='button1', n_clicks = 0, style={'marginTop': '3rem'}),
-            dbc.Collapse(("This content is hidden in the collapse"), id="collapse1",is_open=True),
-            
-            html.Label('Graph 1:', style={'paddingTop': '2rem'}),
+            ), 
+            html.Label('Change Graph:', style={'paddingTop': '2rem'}),
             dcc.Dropdown(
-                id="color",
-                options=[{"label": x, "value": x} for x in sorted(Color)],
+                id="Graph_unique",
+                options=[{'label': 'Scatter Plot', 'value': 'Scatter'}, {'label': 'Box Plot', 'value': 'Box'}],
+                value='Scatter',
                 className="dcc_control",
-                placeholder="color code",
-                style={'marginTop': '5px'}                
-            ),               
-            dcc.RadioItems(
-                id='crossfilter-xtype',
-                options=[{'label': i, 'value': i} for i in ['Linear', 'Log']],
-                value='Linear',
-                labelStyle={'display': 'inline-block', 'marginTop': '5px'}
+                clearable = False,
+            ),
+            # Collapse Button 1            
+            dbc.Button(
+                "Customize Scatter Plot",
+                id="collapse-button",
+                className="mb-3",
+                color="primary",
+                n_clicks=0,
+                style={'marginTop': '2rem'}  ,
+            ),
+            dbc.Collapse(
+                dbc.Card(dbc.CardBody(
+                        html.Div(children=[
+                            html.Label('Filter Data:', style={'paddingTop': '1rem'}),
+                            dcc.Dropdown(
+                                id="color",
+                                options=[{"label": x, "value": x} for x in sorted(Color)],
+                                className="dcc_control",
+                                placeholder="color code",
+                                value=Color[0],
+                                style={'marginTop': '5px'}                
+                            ),
+                            html.Label('X Axis:', style={'paddingTop': '1rem'}),            
+                            dcc.RadioItems(
+                                id='crossfilter-xtype',
+                                options=[{'label': i, 'value': i} for i in ['Linear', 'Log']],
+                                value='Linear',
+                                labelStyle={'display': 'inline-block', 'marginTop': '5px'}
+                            ),            
+                            dcc.Dropdown(
+                                id="x_axis1",
+                                options=[{"label": x, "value": x} for x in sorted(Axes)],
+                                className="dcc_control",
+                                value=Axes[0],
+                                placeholder="x-axis",              
+                            ),
+                            html.Label('Y Axis:', style={'paddingTop': '1rem'}),    
+                            dcc.RadioItems(
+                                id='crossfilter-ytype',
+                                options=[{'label': i, 'value': i} for i in ['Linear', 'Log']],
+                                value='Linear',
+                                labelStyle={'display': 'inline-block', 'marginTop': '5px'}
+                            ),
+                            dcc.Dropdown(
+                                id="y_axis1",
+                                options=[{"label": x, "value": x} for x in sorted(Axes)],
+                                className="dcc_control",
+                                value=Axes[0],
+                                placeholder="y-axis",
+                            ),
+                        ]),
+                    )
+                ),
+                id="collapse",
+                is_open=False,
+            ),
+            # Collapse Button 2
+            dbc.Button(
+                "Customzie Box Plot",
+                id="collapse-button2",
+                className="mb-3",
+                color="primary",
+                n_clicks=0,
+                style={'marginTop': '1rem'}  ,
             ),            
-            dcc.Dropdown(
-                id="x_axis1",
-                options=[{"label": x, "value": x} for x in sorted(Axes)],
-                className="dcc_control",
-                placeholder="x-axis",              
-            ),
-            dcc.RadioItems(
-                id='crossfilter-ytype',
-                options=[{'label': i, 'value': i} for i in ['Linear', 'Log']],
-                value='Linear',
-                labelStyle={'display': 'inline-block', 'marginTop': '5px'}
-            ),
-            dcc.Dropdown(
-                id="y_axis1",
-                options=[{"label": x, "value": x} for x in sorted(Axes)],
-                className="dcc_control",
-                placeholder="y-axis",
-            ),
-            html.Label('Box Plot 1:', style={'paddingTop': '2rem'}),
-            dcc.Dropdown(
-                id="color2",
-                options=[{"label": x, "value": x} for x in sorted(Color)],
-                className="dcc_control",
-                placeholder="color code",
-                style={'marginTop': '5px'}                
-            ),               
-            dcc.RadioItems(
-                id='crossfilter-xtype2',
-                options=[{'label': i, 'value': i} for i in ['Linear', 'Log']],
-                value='Linear',
-                labelStyle={'display': 'inline-block', 'marginTop': '5px'}
-            ),            
-            dcc.Dropdown(
-                id="x_axis2",
-                options=[{"label": x, "value": x} for x in sorted(Color)],
-                className="dcc_control",
-                placeholder="x-axis",              
-            ),
-            dcc.RadioItems(
-                id='crossfilter-ytype2',
-                options=[{'label': i, 'value': i} for i in ['Linear', 'Log']],
-                value='Linear',
-                labelStyle={'display': 'inline-block', 'marginTop': '5px'}
-            ),
-            dcc.Dropdown(
-                id="y_axis2",
-                options=[{"label": x, "value": x} for x in sorted(Axes)],
-                className="dcc_control",
-                placeholder="y-axis",
-            ),
-
-        ], className="three columns", style={'padding':'2rem', 'border-radius': '1rem', 'marginTop': '5rem', 'margin-bottom': '5rem', 'boxShadow': '#e3e3e3 4px 4px 2px', 'backgroundColor': 'white'}),
-
+            dbc.Collapse(
+                dbc.Card(dbc.CardBody(
+                        html.Div(children=[
+                            html.Label('Filter Data:', style={'paddingTop': '1rem'}),
+                            dcc.Dropdown(
+                                id="color2",
+                                options=[{"label": x, "value": x} for x in sorted(Color)],
+                                className="dcc_control",
+                                placeholder="color code",
+                                value=Color[0],
+                                style={'marginTop': '5px'}                
+                            ),               
+                            html.Label('X Axis:', style={'paddingTop': '1rem'}),   
+                            dcc.RadioItems(
+                                id='crossfilter-xtype2',
+                                options=[{'label': i, 'value': i} for i in ['Linear', 'Log']],
+                                value='Linear',
+                                labelStyle={'display': 'inline-block', 'marginTop': '5px'}
+                            ),            
+                            dcc.Dropdown(
+                                id="x_axis2",
+                                options=[{"label": x, "value": x} for x in sorted(Color)],
+                                className="dcc_control",
+                                value=Color[0],
+                                placeholder="x-axis",              
+                            ),
+                            html.Label('Y Axis:', style={'paddingTop': '1rem'}),  
+                            dcc.RadioItems(
+                                id='crossfilter-ytype2',
+                                options=[{'label': i, 'value': i} for i in ['Linear', 'Log']],
+                                value='Linear',
+                                labelStyle={'display': 'inline-block', 'marginTop': '5px'}
+                            ),
+                            dcc.Dropdown(
+                                id="y_axis2",
+                                options=[{"label": x, "value": x} for x in sorted(Axes)],
+                                className="dcc_control",
+                                value=Axes[0],
+                                placeholder="y-axis",
+                            ),
+                        ]),
+                    )
+                ),
+                id="collapse2",
+                is_open=False,
+            ),                      
+        ], className="three columns", style={'padding':'2rem', 'border-radius': '1rem', 'marginTop': '5rem', 'margin-bottom': '10rem', 'boxShadow': '#e3e3e3 4px 4px 2px', 'backgroundColor': 'white'}),
         # Statistic Boxes 1st Column
         html.Div(children=[
             html.Div(children=[
@@ -233,7 +284,6 @@ app.layout = html.Div(children=[
         ], className="two columns", style={'marginTop': '5rem', 'margin-left': '-1rem'}),
     ], style={'margin-bottom': '25rem'}),
     
-
     # Second Row Items
     html.Div(children=[   
         
@@ -246,34 +296,31 @@ app.layout = html.Div(children=[
         html.Div(
             html.Img(id="img_1", style={'height':'440px', 'width':'100%'})
         , className="four columns", style={'display': 'inline-block', 'padding':'2rem', 'border-radius': '1rem', 'boxShadow': '#e3e3e3 4px 4px 2px', 'backgroundColor': 'white'})     
-    ]),
-    
-    # Third Row Items
-    html.Div(children=[   
-    
-        # Box Plot 1
-        html.Div([
-            dcc.Graph(id="boxplot_1")
-        ], className="seven columns", style={'marginTop': '5rem', 'display': 'inline-block', 'padding':'2rem', 'margin-left':'5rem', 'border-radius': '1rem', 'boxShadow': '#e3e3e3 4px 4px 2px', 'backgroundColor': 'white'}),
-        
-        # Xray Photo
-        html.Div(
-            html.Img(id="img_2", style={'height':'440px', 'width':'100%'})
-        , className="four columns", style={'marginTop': '5rem', 'display': 'inline-block', 'padding':'2rem', 'border-radius': '1rem', 'boxShadow': '#e3e3e3 4px 4px 2px', 'backgroundColor': 'white'})
-    ], style={'margin-bottom': '10rem'}),   
+    ]),  
 ])
 
+# Update Collapse 1
 @app.callback(
-    Output("collapse1", "is_open"),
-    [
-        Input("button1", "n_clicks"),
-        State("collapse1", "is_open")
-    ],
+    Output("collapse", "is_open"),
+    [Input("collapse-button", "n_clicks")],
+    [State("collapse", "is_open")],
 )
 def toggle_collapse(n, is_open):
     if n:
         return not is_open
     return is_open
+    
+# Update Collapse 2
+@app.callback(
+    Output("collapse2", "is_open"),
+    [Input("collapse-button2", "n_clicks")],
+    [State("collapse2", "is_open")],
+)
+def toggle_collapse(n, is_open):
+    if n:
+        return not is_open
+    return is_open
+
 
 # Update Statistic Box 1
 @app.callback(
@@ -361,7 +408,6 @@ def update_stat_name2(stat2_name):
     return name2
 
 
-
 # Update Statistic Box 3
 @app.callback(
     Output("stat_3", "children"),
@@ -413,7 +459,6 @@ def update_stat2(slider_range,stat_column,sex,mortality):
 def update_stat_name2(stat3_name):
     name3 = ("Max ",stat3_name)
     return name3
-
 
 
 # Update Statistic Box 4
@@ -469,7 +514,7 @@ def update_stat_name2(stat4_name):
 
 
 
-# Update Graph 1
+# Update Graph
 @app.callback(
     Output("graph_1", "figure"),
     [
@@ -477,105 +522,95 @@ def update_stat_name2(stat4_name):
         Input("Sex_unique", "value"),
         Input("x_axis1", "value"),
         Input("y_axis1", "value"),
-        Input("crossfilter-xtype", "value"),
-        Input("crossfilter-ytype", "value"),
-        Input("Mortality", "value"),
-        Input("color", "value"),
-        Input("score_slider", "value"),
-    ]
-)
-def update_stat2(slider_range,sex,x1_axis,y1_axis,crossfilter_x,crossfilter_y,mortality,colorcode,score):
-
-    # Parse DataFrame for Age
-    low, high = slider_range
-    mask = (df['Age'] >= low) & (df['Age'] <= high)
-    df1 = df[mask]
-    # Parse DataFrame for Score
-    low, high = score
-    mask = (df1['TotalScore'] >= low) & (df1['TotalScore'] <= high)
-    df2 = df1[mask]
-    # Parse DataFrame for Sex
-    if sex == 'Male & Female':
-        df3 = df2
-    elif sex == 'Male':
-        df3 = df2[df2['Sex'] == 0]
-    elif sex == 'Female':
-        df3 = df2[df2['Sex'] == 1]
-    # Parse DataFrame for Mortality
-    if mortality == 'Alive & Deceased':
-        df4 = df3
-    elif mortality == 'Alive':
-        df4 = df3[df3['Mortality'] == 0]
-    elif mortality == 'Deceased':
-        df4 = df3[df3['Mortality'] == 1]
-    # Create Bar Graph
-    if df3.shape[0] == 0:
-        fig = px.scatter()
-    else:
-        fig = px.scatter(df3, x = (x1_axis), y = (y1_axis), trendline = 'ols', hover_name= "MRNs", color = colorcode)
-        fig.update_layout(title_text='Scatter Plot:', title_x=0.5)
-        # Update Axes based on Linear or Log
-        fig.update_xaxes(type='linear' if crossfilter_x == 'Linear' else 'log')
-        fig.update_yaxes(type='linear' if crossfilter_y == 'Linear' else 'log')
-        # Update Margin
-        fig.update_layout(margin={'l': 0, 'b': 0, 't': 40, 'r': 0}, hovermode='closest')
-        fig.update_layout(plot_bgcolor="#FFF", xaxis=dict(linecolor="#BCCCDC", showgrid=False), yaxis=dict(linecolor="#BCCCDC", showgrid=False))
-    return fig
-
-# Update Box Plot
-@app.callback(
-    Output("boxplot_1", "figure"),
-    [
-        Input("age_slider", "value"),
-        Input("Sex_unique", "value"),
         Input("x_axis2", "value"),
         Input("y_axis2", "value"),
+        Input("crossfilter-xtype", "value"),
+        Input("crossfilter-ytype", "value"),
         Input("crossfilter-xtype2", "value"),
         Input("crossfilter-ytype2", "value"),
         Input("Mortality", "value"),
+        Input("color", "value"),
         Input("color2", "value"),
         Input("score_slider", "value"),
+        Input("Graph_unique", "value"),
     ]
 )
-def update_stat2(slider_range,sex,x2_axis,y2_axis,crossfilter_x,crossfilter_y,mortality,colorcode,score):
+def update_stat2(slider_range,sex,x1_axis,y1_axis,x2_axis,y2_axis,crossfilter_x,crossfilter_y,crossfilter_x2,crossfilter_y2,mortality,colorcode,colorcode2,score,graph_unique):
+    print(graph_unique)
+    if graph_unique == 'Scatter':
+        # Parse DataFrame for Age
+        low, high = slider_range
+        mask = (df['Age'] >= low) & (df['Age'] <= high)
+        df1 = df[mask]
+        # Parse DataFrame for Score
+        low, high = score
+        mask = (df1['TotalScore'] >= low) & (df1['TotalScore'] <= high)
+        df2 = df1[mask]
+        # Parse DataFrame for Sex
+        if sex == 'Male & Female':
+            df3 = df2
+        elif sex == 'Male':
+            df3 = df2[df2['Sex'] == 0]
+        elif sex == 'Female':
+            df3 = df2[df2['Sex'] == 1]
+        # Parse DataFrame for Mortality
+        if mortality == 'Alive & Deceased':
+            df4 = df3
+        elif mortality == 'Alive':
+            df4 = df3[df3['Mortality'] == 0]
+        elif mortality == 'Deceased':
+            df4 = df3[df3['Mortality'] == 1]
+        # Create Bar Graph
+        if df3.shape[0] == 0:
+            fig = px.scatter()
+        else:
+            fig = px.scatter(df3, x = (x1_axis), y = (y1_axis), trendline = 'ols', hover_name= "MRNs", color = colorcode)
+            fig.update_layout(title_text='Scatter Plot:', title_x=0.5)
+            # Update Axes based on Linear or Log
+            fig.update_xaxes(type='linear' if crossfilter_x == 'Linear' else 'log')
+            fig.update_yaxes(type='linear' if crossfilter_y == 'Linear' else 'log')
+            # Update Margin
+            fig.update_layout(margin={'l': 0, 'b': 0, 't': 40, 'r': 0}, hovermode='closest')
+            fig.update_layout(plot_bgcolor="#FFF", xaxis=dict(linecolor="#BCCCDC", showgrid=False), yaxis=dict(linecolor="#BCCCDC", showgrid=False))
+        return fig
+    if graph_unique == 'Box':
+            # Parse DataFrame for Age
+        low, high = slider_range
+        mask = (df['Age'] >= low) & (df['Age'] <= high)
+        df1 = df[mask]
+        # Parse DataFrame for Score
+        low, high = score
+        mask = (df1['TotalScore'] >= low) & (df1['TotalScore'] <= high)
+        df2 = df1[mask]
+        # Parse DataFrame for Sex
+        if sex == 'Male & Female':
+            df3 = df2
+        elif sex == 'Male':
+            df3 = df2[df2['Sex'] == 0]
+        elif sex == 'Female':
+            df3 = df2[df2['Sex'] == 1]
+        # Parse DataFrame for Mortality
+        if mortality == 'Alive & Deceased':
+            df4 = df3
+        elif mortality == 'Alive':
+            df4 = df3[df3['Mortality'] == 0]
+        elif mortality == 'Deceased':
+            df4 = df3[df3['Mortality'] == 1]
+        # Create Bar Graph
+        if df3.shape[0] == 0:
+            fig = px.box()
+        else:
+            fig = px.box(df3, x = (x2_axis), y = (y2_axis), hover_name= "MRNs", color = colorcode2, points = "all")
+            fig.update_layout(title_text='Box Plot:', title_x=0.5)
+            # Update Axes based on Linear or Log
+            fig.update_xaxes(type='linear' if crossfilter_x2 == 'Linear' else 'log')
+            fig.update_yaxes(type='linear' if crossfilter_y2 == 'Linear' else 'log')
+            # Update Margin
+            fig.update_layout(margin={'l': 0, 'b': 0, 't': 40, 'r': 0}, hovermode='closest')
+            fig.update_layout(plot_bgcolor="#FFF", xaxis=dict(linecolor="#BCCCDC", showgrid=False), yaxis=dict(linecolor="#BCCCDC", showgrid=False))
+        return fig
 
-    # Parse DataFrame for Age
-    low, high = slider_range
-    mask = (df['Age'] >= low) & (df['Age'] <= high)
-    df1 = df[mask]
-    # Parse DataFrame for Score
-    low, high = score
-    mask = (df1['TotalScore'] >= low) & (df1['TotalScore'] <= high)
-    df2 = df1[mask]
-    # Parse DataFrame for Sex
-    if sex == 'Male & Female':
-        df3 = df2
-    elif sex == 'Male':
-        df3 = df2[df2['Sex'] == 0]
-    elif sex == 'Female':
-        df3 = df2[df2['Sex'] == 1]
-    # Parse DataFrame for Mortality
-    if mortality == 'Alive & Deceased':
-        df4 = df3
-    elif mortality == 'Alive':
-        df4 = df3[df3['Mortality'] == 0]
-    elif mortality == 'Deceased':
-        df4 = df3[df3['Mortality'] == 1]
-    # Create Bar Graph
-    if df3.shape[0] == 0:
-        fig = px.box()
-    else:
-        fig = px.box(df3, x = (x2_axis), y = (y2_axis), hover_name= "MRNs", color = colorcode, points = "all")
-        fig.update_layout(title_text='Box Plot:', title_x=0.5)
-        # Update Axes based on Linear or Log
-        fig.update_xaxes(type='linear' if crossfilter_x == 'Linear' else 'log')
-        fig.update_yaxes(type='linear' if crossfilter_y == 'Linear' else 'log')
-        # Update Margin
-        fig.update_layout(margin={'l': 0, 'b': 0, 't': 40, 'r': 0}, hovermode='closest')
-        fig.update_layout(plot_bgcolor="#FFF", xaxis=dict(linecolor="#BCCCDC", showgrid=False), yaxis=dict(linecolor="#BCCCDC", showgrid=False))
-    return fig
-
-# Update Xray 1
+# Update Xray Photo
 @app.callback(
     Output("img_1", "src"),
     [
@@ -591,21 +626,6 @@ def update_xray(hoverData):
         img = src=app.get_asset_url(newfilename)
     return img
     
-# Update Xray 2
-@app.callback(
-    Output("img_2", "src"),
-    [
-        Input("boxplot_1", "hoverData"),
-    ]   
-)     
-def update_xray(hoverData):
-    if hoverData == None:
-        img = src=app.get_asset_url('lab_logo.png')
-    else:
-        filename = hoverData['points'][0]['hovertext']
-        newfilename = filename.replace("_feats.mat", ".png")
-        img = src=app.get_asset_url(newfilename)
-    return img
 
 
 app.run_server(debug=True)
