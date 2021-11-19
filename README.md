@@ -6,8 +6,10 @@ Created to help physicians better visualize and understand data from sets of pat
 
 ```
 pip install dash
+pip install dash-bootstrap-components
 pip install pandas
 pip install numpy
+pip install xlrd
 ```
 Replace the first line of code which currently says this:
 ```
