@@ -17,9 +17,9 @@ import plotly.figure_factory as ff
 df = pd.read_excel(r'C:\Users\pardo\OneDrive\Desktop\AI Lab Play Data\Data\LungDataBatch1_2.xlsx')
 
 # Load Chief Complaint List
-Unique_identifiers = ['var_HaralickCorrelationWs_5', 'median_LawsW5E5', 'var_HaralickCorrelationWs_7', 'median_LawsS5W5', 'var_HaralickEnergyWs_5', 'median_RawIntensity', 'skewness_GaborXY___0_785___1_276_BW_1',
+Unique_identifiers = ['median_LawsW5E5', 'var_HaralickCorrelationWs_7', 'median_LawsS5W5', 'var_HaralickEnergyWs_5', 'median_RawIntensity', 'skewness_GaborXY___0_785___1_276_BW_1',
                         'var_HaralickEntropyWs_3', 'var_HaralickDiff_entWs_3', 'var_HaralickCorrelationWs_5', 'skewness_RawIntensity', 'kurtosis_HaralickInfo1Ws_7', 'median_GradientSobelx', 'median_HaralickInertiaWs_3',
-                        'kurtosis_HaralickInfo2Ws_3', 'var_HaralickCorrelationWs_3', 'median_HaralickSum_avWs_3', 'median_GradientX', 'kurtosis_GrayStd_devWs_3', 'median_lawsL5S5', 'kurtosis_GaborXY___1_963___1_276_BW_1']
+                        'kurtosis_HaralickInfo2Ws_3', 'var_HaralickCorrelationWs_3', 'median_HaralickSum_avWs_3', 'median_GradientX', 'kurtosis_GrayStd_devWs_3', 'median_LawsL5S5', 'kurtosis_GaborXY___1_963___1_276_BW_1']
 
  
 # Load Axes Options
@@ -36,7 +36,6 @@ Color = ['Mortality', 'TotalScore']
 
 # Create App
 app = dash.Dash(__name__)
-#app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 
 # App Layout
@@ -46,7 +45,7 @@ app.layout = html.Div(children=[
     html.Div(children=[
         html.H3(children='Radiomic Features Dashboard'),
         # html.H4(children='Patient Overview', style={'marginTop': '-1.5rem'})
-    ], style={'textAlign': 'center', 'marginTop': '5rem'}),
+    ], style={'textAlign': 'center', 'marginTop': '5rem', 'color': 'white'}),
    
    
     # First Row Items
@@ -122,7 +121,7 @@ app.layout = html.Div(children=[
                 className="dcc_control",
                 clearable = False,               
             ),
-        ], className="three columns", style={'padding':'2rem', 'margin-left':'20rem', 'border-radius': '1rem', 'marginTop': '5rem', 'boxShadow': '#e3e3e3 4px 4px 2px', 'backgroundColor': 'white'}),
+        ], className="three columns", style={'padding':'2rem', 'margin-left':'20rem', 'border-radius': '1rem', 'marginTop': '5rem', 'boxShadow': '#4b575e 4px 4px 2px', 'backgroundColor': 'white'}),
         
         # Graph Customization Box #
         html.Div(children=[
@@ -256,18 +255,19 @@ app.layout = html.Div(children=[
                 id="collapse2",
                 is_open=False,
             ),                      
-        ], className="three columns", style={'padding':'2rem', 'border-radius': '1rem', 'marginTop': '5rem', 'margin-bottom': '10rem', 'boxShadow': '#e3e3e3 4px 4px 2px', 'backgroundColor': 'white'}),
+        ], className="three columns", style={'padding':'2rem', 'border-radius': '1rem', 'marginTop': '5rem', 'margin-bottom': '10rem', 'boxShadow': '#4b575e 4px 4px 2px', 'backgroundColor': 'white'}),
+        
         # Statistic Boxes 1st Column
         html.Div(children=[
             html.Div(children=[
                 html.H2(id='stat_1'),
                 html.Label('No. of Patients'),
-            ], id = "statbox_1", style={'padding': '2.5rem', 'border-radius': '1rem', 'margin-left': '3rem', 'boxShadow': '#e3e3e3 4px 4px 2px', 'backgroundColor': 'white'}),
+            ], id = "statbox_1", style={'padding': '2.5rem', 'border-radius': '1rem', 'margin-left': '3rem', 'boxShadow': '#4b575e 4px 4px 2px', 'backgroundColor': 'white'}),
             
             html.Div(children=[
                 html.H2(id='stat_2'),
                 html.Label(id='stat_name2'),
-            ], id = "statbox_2", style={'padding': '2.5rem', 'border-radius': '1rem', 'margin-left': '3rem', 'marginTop': '1.5rem', 'boxShadow': '#e3e3e3 4px 4px 2px', 'backgroundColor': 'white'}),   
+            ], id = "statbox_2", style={'padding': '2.5rem', 'border-radius': '1rem', 'margin-left': '3rem', 'marginTop': '1.5rem', 'boxShadow': '#4b575e 4px 4px 2px', 'backgroundColor': 'white'}),   
         ], className="two columns", style={'marginTop': '5rem', 'margin-left':'2rem'}),
         
         # Statistic Boxes 2nd Column
@@ -275,12 +275,12 @@ app.layout = html.Div(children=[
             html.Div(children=[
                 html.H2(id='stat_3'),
                 html.Label(id='stat_name3'),
-            ], id = "statbox_3", style={'padding': '2.5rem', 'border-radius': '1rem', 'margin-left': '3rem', 'boxShadow': '#e3e3e3 4px 4px 2px', 'backgroundColor': 'white'}),
+            ], id = "statbox_3", style={'padding': '2.5rem', 'border-radius': '1rem', 'margin-left': '3rem', 'boxShadow': '#4b575e 4px 4px 2px', 'backgroundColor': 'white'}),
             
             html.Div(children=[
                 html.H2(id='stat_4'),
                 html.Label(id='stat_name4'),
-            ], id = "statbox_4", style={'padding': '2.5rem', 'border-radius': '1rem', 'margin-left': '3rem', 'marginTop': '1.5rem', 'boxShadow': '#e3e3e3 4px 4px 2px', 'backgroundColor': 'white'}),    
+            ], id = "statbox_4", style={'padding': '2.5rem', 'border-radius': '1rem', 'margin-left': '3rem', 'marginTop': '1.5rem', 'boxShadow': '#4b575e 4px 4px 2px', 'backgroundColor': 'white'}),    
         ], className="two columns", style={'marginTop': '5rem', 'margin-left': '-1rem'}),
     ], style={'margin-bottom': '25rem'}),
     
@@ -290,12 +290,12 @@ app.layout = html.Div(children=[
         # Graph 1
         html.Div([
             dcc.Graph(id="graph_1")
-        ], className="seven columns", style={'display': 'inline-block', 'padding':'2rem', 'margin-left':'5rem', 'border-radius': '1rem', 'boxShadow': '#e3e3e3 4px 4px 2px', 'backgroundColor': 'white'}),
+        ], className="seven columns", style={'display': 'inline-block', 'padding':'2rem', 'margin-left':'5rem', 'border-radius': '1rem', 'boxShadow': '#4b575e 4px 4px 2px', 'backgroundColor': 'white'}),
         
         # Xray Photo
         html.Div(
             html.Img(id="img_1", style={'height':'440px', 'width':'100%'})
-        , className="four columns", style={'display': 'inline-block', 'padding':'2rem', 'border-radius': '1rem', 'boxShadow': '#e3e3e3 4px 4px 2px', 'backgroundColor': 'white'})     
+        , className="four columns", style={'display': 'inline-block', 'padding':'2rem', 'border-radius': '1rem', 'boxShadow': '#4b575e 4px 4px 2px', 'backgroundColor': 'white'})     
     ]),  
 ])
 
@@ -329,30 +329,35 @@ def toggle_collapse(n, is_open):
         Input("age_slider", "value"),
         Input("Sex_unique", "value"),
         Input("Mortality", "value"),
+        Input("score_slider", "value"),
     ],
 )
-def update_stat1(slider_range,sex,mortality):
+def update_stat1(slider_range,sex,mortality,score):
     # Parse DataFrame for Age
     low, high = slider_range
     mask = (df['Age'] >= low) & (df['Age'] <= high)
     df1 = df[mask]
+    # Parse DataFrame for Score
+    low, high = score
+    mask = (df1['TotalScore'] >= low) & (df1['TotalScore'] <= high)
+    df2 = df1[mask]
     # Parse DataFrame for Sex
     if sex == 'Male & Female':
-        df2 = df1
+        df3 = df2
     elif sex == 'Male':
-        df2 = df1[df1['Sex'] == 0]
+        df3 = df2[df2['Sex'] == 0]
     elif sex == 'Female':
-        df2 = df1[df1['Sex'] == 1]
+        df3 = df2[df2['Sex'] == 1]
     # Parse DataFrame for Mortality
     if mortality == 'Alive & Deceased':
-        number = df2.shape[0]
+        number = df3.shape[0]
         return number
     elif mortality == 'Alive':
-        df3 = df2[df2['Mortality'] == 0]
-        number = df3.shape[0]
+        df4 = df3[df3['Mortality'] == 0]
+        number = df4.shape[0]
     elif mortality == 'Deceased':
-        df3 = df2[df2['Mortality'] == 1]
-        number = df3.shape[0] 
+        df4 = df3[df3['Mortality'] == 1]
+        number = df4.shape[0] 
     return number
 
 
@@ -364,35 +369,40 @@ def update_stat1(slider_range,sex,mortality):
         Input("Stat_unique", "value"),
         Input("Sex_unique", "value"),
         Input("Mortality", "value"),
+        Input("score_slider", "value"),        
     ],
 )
-def update_stat2(slider_range,stat_column,sex,mortality):
+def update_stat2(slider_range,stat_column,sex,mortality,score):
     # Parse DataFrame for Age
     low, high = slider_range
     mask = (df['Age'] >= low) & (df['Age'] <= high)
     df1 = df[mask]
+    # Parse DataFrame for Score
+    low, high = score
+    mask = (df1['TotalScore'] >= low) & (df1['TotalScore'] <= high)
+    df2 = df1[mask]    
     # Parse DataFrame for Sex
     if sex == 'Male & Female':
-        df2 = df1
+        df3 = df2
     elif sex == 'Male':
-        df2 = df1[df1['Sex'] == 0]
+        df3 = df2[df2['Sex'] == 0]
     elif sex == 'Female':
-        df2 = df1[df1['Sex'] == 1]
+        df3 = df2[df2['Sex'] == 1]
     # Parse DataFrame for Mortality
     if mortality == 'Alive & Deceased':
-        number = df2[stat_column].mean()
+        number = df3[stat_column].mean()
         number = number.round(1)
         return number
     elif mortality == 'Alive':
-        df3 = df2[df2['Mortality'] == 0]
-        number = df3[stat_column].mean()
+        df4 = df3[df3['Mortality'] == 0]
+        number = df4[stat_column].mean()
         number = number.round(1)
     elif mortality == 'Deceased':
-        df3 = df2[df2['Mortality'] == 1]
-        if df3.shape[0] == 0:
+        df4 = df3[df3['Mortality'] == 1]
+        if df4.shape[0] == 0:
             number = 0
         else:
-            number = df3[stat_column].mean()
+            number = df4[stat_column].mean()
             number = number.round(1)
     return number
 
@@ -416,35 +426,40 @@ def update_stat_name2(stat2_name):
         Input("Stat_unique", "value"),
         Input("Sex_unique", "value"),
         Input("Mortality", "value"),
+        Input("score_slider", "value"),
     ],
 )
-def update_stat2(slider_range,stat_column,sex,mortality):
+def update_stat2(slider_range,stat_column,sex,mortality,score):
     # Parse DataFrame for Age
     low, high = slider_range
     mask = (df['Age'] >= low) & (df['Age'] <= high)
     df1 = df[mask]
+    # Parse DataFrame for Score
+    low, high = score
+    mask = (df1['TotalScore'] >= low) & (df1['TotalScore'] <= high)
+    df2 = df1[mask]
     # Parse DataFrame for Sex
     if sex == 'Male & Female':
-        df2 = df1
+        df3 = df2
     elif sex == 'Male':
-        df2 = df1[df1['Sex'] == 0]
+        df3 = df2[df2['Sex'] == 0]
     elif sex == 'Female':
-        df2 = df1[df1['Sex'] == 1]
+        df3 = df2[df2['Sex'] == 1]
     # Parse DataFrame for Mortality
     if mortality == 'Alive & Deceased':
-        number = df2[stat_column].max()
+        number = df3[stat_column].max()
         number = number.round()
         return number
     elif mortality == 'Alive':
-        df3 = df2[df2['Mortality'] == 0]
-        number = df3[stat_column].max()
+        df4 = df3[df3['Mortality'] == 0]
+        number = df4[stat_column].max()
         number = number.round()
     elif mortality == 'Deceased':
-        df3 = df2[df2['Mortality'] == 1]
-        if df3.shape[0] == 0:
+        df4 = df3[df3['Mortality'] == 1]
+        if df4.shape[0] == 0:
             number = 0
         else:
-            number = df3[stat_column].max()
+            number = df4[stat_column].max()
             number = number.round()
     return number
     
@@ -469,35 +484,41 @@ def update_stat_name2(stat3_name):
         Input("Stat_unique", "value"),
         Input("Sex_unique", "value"),
         Input("Mortality", "value"),
+        Input("score_slider", "value"),        
+        
     ],
 )
-def update_stat2(slider_range,stat_column,sex,mortality):
+def update_stat2(slider_range,stat_column,sex,mortality,score):
     # Parse DataFrame for Age
     low, high = slider_range
     mask = (df['Age'] >= low) & (df['Age'] <= high)
     df1 = df[mask]
+    # Parse DataFrame for Score
+    low, high = score
+    mask = (df1['TotalScore'] >= low) & (df1['TotalScore'] <= high)
+    df2 = df1[mask]    
     # Parse DataFrame for Sex
     if sex == 'Male & Female':
-        df2 = df1
+        df3 = df2
     elif sex == 'Male':
-        df2 = df1[df1['Sex'] == 0]
+        df3 = df2[df2['Sex'] == 0]
     elif sex == 'Female':
-        df2 = df1[df1['Sex'] == 1]
+        df3 = df2[df2['Sex'] == 1]
     # Parse DataFrame for Mortality
     if mortality == 'Alive & Deceased':
-        number = df2[stat_column].std()
+        number = df3[stat_column].std()
         number = number.round(1)
         return number
     elif mortality == 'Alive':
-        df3 = df2[df2['Mortality'] == 0]
-        number = df3[stat_column].std()
+        df4 = df3[df3['Mortality'] == 0]
+        number = df4[stat_column].std()
         number = number.round(1)
     elif mortality == 'Deceased':
-        df3 = df2[df2['Mortality'] == 1]
-        if df3.shape[0] == 0:
+        df4 = df3[df3['Mortality'] == 1]
+        if df4.shape[0] == 0:
             number = 0
         else:
-            number = df3[stat_column].std()
+            number = df4[stat_column].std()
             number = number.round(1)
     return number
 
@@ -536,7 +557,6 @@ def update_stat_name2(stat4_name):
     ]
 )
 def update_stat2(slider_range,sex,x1_axis,y1_axis,x2_axis,y2_axis,crossfilter_x,crossfilter_y,crossfilter_x2,crossfilter_y2,mortality,colorcode,colorcode2,score,graph_unique):
-    print(graph_unique)
     if graph_unique == 'Scatter':
         # Parse DataFrame for Age
         low, high = slider_range
@@ -561,10 +581,12 @@ def update_stat2(slider_range,sex,x1_axis,y1_axis,x2_axis,y2_axis,crossfilter_x,
         elif mortality == 'Deceased':
             df4 = df3[df3['Mortality'] == 1]
         # Create Bar Graph
-        if df3.shape[0] == 0:
+        if df4.shape[0] == 0:
             fig = px.scatter()
         else:
-            fig = px.scatter(df3, x = (x1_axis), y = (y1_axis), trendline = 'ols', hover_name= "MRNs", color = colorcode)
+            df4["Mortality"] = df4["Mortality"].astype(str)
+            df4["TotalScore"] = df4["TotalScore"].astype(str)        
+            fig = px.scatter(df4, x = (x1_axis), y = (y1_axis), trendline = "ols", trendline_scope = "overall", trendline_color_override = "grey", hover_name= "MRNs", color = colorcode)
             fig.update_layout(title_text='Scatter Plot:', title_x=0.5)
             # Update Axes based on Linear or Log
             fig.update_xaxes(type='linear' if crossfilter_x == 'Linear' else 'log')
@@ -572,9 +594,27 @@ def update_stat2(slider_range,sex,x1_axis,y1_axis,x2_axis,y2_axis,crossfilter_x,
             # Update Margin
             fig.update_layout(margin={'l': 0, 'b': 0, 't': 40, 'r': 0}, hovermode='closest')
             fig.update_layout(plot_bgcolor="#FFF", xaxis=dict(linecolor="#BCCCDC", showgrid=False), yaxis=dict(linecolor="#BCCCDC", showgrid=False))
+            # Update Traces
+            fig.update_layout(legend_traceorder = 'reversed')
+            # Update Layout
+            fig.update_layout(
+                yaxis=dict(
+                    autorange=True,
+                    showgrid=True,
+                    zeroline=True,
+                    dtick=5,
+                    gridcolor='rgb(255, 255, 255)',
+                    gridwidth=1,
+                    zerolinecolor='rgb(255, 255, 255)',
+                    zerolinewidth=1,
+                ),
+                paper_bgcolor='rgb(243, 243, 243)',
+                plot_bgcolor='rgb(243, 243, 243)',
+                showlegend=True
+            )            
         return fig
     if graph_unique == 'Box':
-            # Parse DataFrame for Age
+        # Parse DataFrame for Age
         low, high = slider_range
         mask = (df['Age'] >= low) & (df['Age'] <= high)
         df1 = df[mask]
@@ -597,10 +637,12 @@ def update_stat2(slider_range,sex,x1_axis,y1_axis,x2_axis,y2_axis,crossfilter_x,
         elif mortality == 'Deceased':
             df4 = df3[df3['Mortality'] == 1]
         # Create Bar Graph
-        if df3.shape[0] == 0:
+        if df4.shape[0] == 0:
             fig = px.box()
         else:
-            fig = px.box(df3, x = (x2_axis), y = (y2_axis), hover_name= "MRNs", color = colorcode2, points = "all")
+            df4["Mortality"] = df4["Mortality"].astype(str)
+            df4["TotalScore"] = df4["TotalScore"].astype(str)
+            fig = px.box(df4, x = (x2_axis), y = (y2_axis), hover_name= "MRNs", color = colorcode2, points = "all")
             fig.update_layout(title_text='Box Plot:', title_x=0.5)
             # Update Axes based on Linear or Log
             fig.update_xaxes(type='linear' if crossfilter_x2 == 'Linear' else 'log')
@@ -608,6 +650,24 @@ def update_stat2(slider_range,sex,x1_axis,y1_axis,x2_axis,y2_axis,crossfilter_x,
             # Update Margin
             fig.update_layout(margin={'l': 0, 'b': 0, 't': 40, 'r': 0}, hovermode='closest')
             fig.update_layout(plot_bgcolor="#FFF", xaxis=dict(linecolor="#BCCCDC", showgrid=False), yaxis=dict(linecolor="#BCCCDC", showgrid=False))
+            # Update Trace
+            fig.update_layout(legend_traceorder = 'reversed')
+            # Update Layout
+            fig.update_layout(
+                yaxis=dict(
+                    autorange=True,
+                    showgrid=True,
+                    zeroline=True,
+                    dtick=5,
+                    gridcolor='rgb(255, 255, 255)',
+                    gridwidth=1,
+                    zerolinecolor='rgb(255, 255, 255)',
+                    zerolinewidth=1,
+                ),
+                paper_bgcolor='rgb(243, 243, 243)',
+                plot_bgcolor='rgb(243, 243, 243)',
+                showlegend=True
+            )            
         return fig
 
 # Update Xray Photo
@@ -618,16 +678,14 @@ def update_stat2(slider_range,sex,x1_axis,y1_axis,x2_axis,y2_axis,crossfilter_x,
     ]   
 )     
 def update_xray(hoverData):
-    if hoverData == None:
-        img = src=app.get_asset_url('lab_logo.png')
-    else:
+    try: 
         filename = hoverData['points'][0]['hovertext']
         newfilename = filename.replace("_feats.mat", ".png")
         img = src=app.get_asset_url(newfilename)
+    except:
+        img = src=app.get_asset_url('lab_logo.png')
     return img
     
-
-
 app.run_server(debug=True)
 
 
