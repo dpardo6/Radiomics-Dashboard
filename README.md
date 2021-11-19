@@ -9,7 +9,7 @@ pip install dash
 pip install dash-bootstrap-components
 pip install pandas
 pip install numpy
-pip install xlrd
+pip install xlrd 1.2.0
 ```
 Replace the first line of code which currently says this:
 ```
